@@ -595,7 +595,7 @@ Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
 
 - 真实 LangGraph `StateGraph`、条件边、有限规划与重规划、Checkpointer、`thread_id`；
 - 正式 MCP Python SDK stdio Server/Client；
-- 七类路由：直接回答、知识库、数据库、测试、浏览器、Hybrid、澄清；
+- 八类路由：直接回答、知识库、数据库、测试、浏览器、代码仓库、Hybrid、澄清；
 - MySQL 只读查询、SQL AST、表白名单、LIMIT 和超时；
 - pytest 受控执行与结果分析；
 - Playwright `channel="chrome"` 页面验证和真实截图；
@@ -604,11 +604,13 @@ Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
 - 独立业务 Trace 与 LangGraph Checkpoint；
 - Mock LLM、真实 OpenAI-compatible LLM、本地 Embedding 与词法降级；
 - 企业文档导入、权限过滤、Evidence Check 和引用。
+- 隔离 Coding Agent：detached Git worktree、代码检索/读取、统一 diff 校验与应用、
+  pytest 验证、失败反馈重试、Git diff 审查及显式工作区清理。
 
 ## 九、目录结构
 
 ```text
-app/                    FastAPI、Agent、MCP、RAG、数据库、安全和 Trace
+app/                    FastAPI、Agent、Coding Agent、MCP、RAG、数据库、安全和 Trace
 frontend/               React、TypeScript、Vite、KaTeX 和前端测试
 knowledge_base/mock/     模拟业务资料
 knowledge_base/enterprise/ 企业导入资料
@@ -626,6 +628,7 @@ docs/                   架构、安全、API、进度和验收文档
 - Agent 业务数据库账号仅有 `SELECT`；
 - Web 账号只操作 Web 用户与聊天表；
 - SQL、命令、URL、文档范围和工具参数由代码策略校验，不由 LLM 决定；
+- Coding Agent 生成的补丁只能进入隔离 worktree，不允许直接修改主工作区；
 - 高风险知识库重建通过审批工作流；
 - Mock、真实模型和降级状态必须在 API、前端和 Trace 中明确显示；
 - TF-IDF 只能称为词法检索，不能称为语义 Embedding。
