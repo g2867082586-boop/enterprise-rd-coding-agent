@@ -1,0 +1,20 @@
+[
+  {
+    "id": "guard-docstring",
+    "issue": "为 app/security/command_guard.py 中的 UnsafeCommandError 添加简短类文档，并补充或调整对应单元测试。不要改变现有安全行为。",
+    "expected_paths": ["app/security/command_guard.py", "tests/unit/test_security_guards.py"],
+    "max_attempts": 2
+  },
+  {
+    "id": "codebase-time-import",
+    "issue": "重构 app/tools/codebase_tool.py：使用普通 import time 替代 __import__('time')，保持行为不变并确保代码工具测试通过。",
+    "expected_paths": ["app/tools/codebase_tool.py"],
+    "max_attempts": 2
+  },
+  {
+    "id": "workspace-error-test",
+    "issue": "为 Coding Agent 工作区不存在时的错误行为增加一个清晰的单元测试，不要放宽路径或工作区安全限制。",
+    "expected_paths": ["tests/unit/test_codebase_tools.py"],
+    "max_attempts": 2
+  }
+]

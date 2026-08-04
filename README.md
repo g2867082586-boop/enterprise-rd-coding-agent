@@ -639,3 +639,4 @@ docs/                   架构、安全、API、进度和验收文档
 - [项目进度与真实验证记录](docs/progress.md)
 - [安全设计](docs/security.md)
 - [远程 CI 指南](docs/remote-ci-guide.md)
+- [Coding Agent 评测](docs/coding-agent-evaluation.md)
