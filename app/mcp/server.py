@@ -14,6 +14,17 @@ from app.rag.indexer import search
 from app.tools.browser_tool import async_browser_check as do_browser_check
 from app.tools.terminal_tool import run_pytest as do_run_pytest
 from app.tools.terminal_tool import run_terminal_command as do_run_terminal_command
+from app.tools.codebase_tool import (
+    apply_code_patch as do_apply_code_patch,
+    create_code_workspace as do_create_code_workspace,
+    discard_code_workspace as do_discard_code_workspace,
+    git_diff as do_git_diff,
+    list_repository as do_list_repository,
+    read_code_file as do_read_code_file,
+    run_code_checks as do_run_code_checks,
+    search_code as do_search_code,
+)
+from app.coding.agent import run_coding_task as do_run_coding_task
 from app.database.session import create_app_session
 from app.orders.schemas import OrderSearchParams
 from app.orders.service import (
@@ -79,6 +90,60 @@ def run_terminal_command(command: str, args: list[str], timeout_seconds: int = 3
 def run_pytest(test_path: str = "tests/scenarios", keyword: str | None = None, marker: str | None = None, verbose: bool = False) -> dict[str, Any]:
     """Run a constrained pytest target and parse the real result."""
     return _run("run_pytest", do_run_pytest, test_path, keyword, marker, verbose)
+
+
+@mcp.tool()
+def create_code_workspace(workspace_id: str) -> dict[str, Any]:
+    """Create an isolated detached Git worktree for one coding task."""
+    return _run("create_code_workspace", do_create_code_workspace, workspace_id)
+
+
+@mcp.tool()
+def discard_code_workspace(workspace_id: str) -> dict[str, Any]:
+    """Remove a generated detached worktree after a coding task is complete."""
+    return _run("discard_code_workspace", do_discard_code_workspace, workspace_id)
+
+
+@mcp.tool()
+def list_repository(workspace_id: str | None = None, relative_path: str = ".", max_entries: int = 200) -> list[str]:
+    """List repository files while excluding generated and dependency directories."""
+    return _run("list_repository", do_list_repository, workspace_id, relative_path, max_entries)
+
+
+@mcp.tool()
+def search_code(query: str, workspace_id: str | None = None, relative_path: str = ".", max_results: int = 50) -> list[dict[str, Any]]:
+    """Search text source files and return path, line number and matching text."""
+    return _run("search_code", do_search_code, query, workspace_id, relative_path, max_results)
+
+
+@mcp.tool()
+def read_code_file(path: str, workspace_id: str | None = None, start_line: int = 1, end_line: int = 200) -> dict[str, Any]:
+    """Read a bounded line range from a UTF-8 source file."""
+    return _run("read_code_file", do_read_code_file, path, workspace_id, start_line, end_line)
+
+
+@mcp.tool()
+def apply_code_patch(workspace_id: str, patch_text: str) -> dict[str, Any]:
+    """Validate and apply a unified diff inside an isolated worktree."""
+    return _run("apply_code_patch", do_apply_code_patch, workspace_id, patch_text)
+
+
+@mcp.tool()
+def get_code_diff(workspace_id: str) -> dict[str, Any]:
+    """Return the current Git diff for an isolated coding workspace."""
+    return _run("get_code_diff", do_git_diff, workspace_id)
+
+
+@mcp.tool()
+def run_code_checks(workspace_id: str, test_path: str = "tests/unit", timeout_seconds: int = 90) -> dict[str, Any]:
+    """Run a bounded pytest target inside an isolated coding workspace."""
+    return _run("run_code_checks", do_run_code_checks, workspace_id, test_path, timeout_seconds)
+
+
+@mcp.tool()
+async def run_coding_task(issue: str, workspace_id: str, max_attempts: int = 2) -> dict[str, Any]:
+    """Run a bounded LLM patch-test-repair loop in an isolated Git worktree."""
+    return await do_run_coding_task(issue, workspace_id, max_attempts)
 
 
 @mcp.tool()

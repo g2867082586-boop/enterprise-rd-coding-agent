@@ -42,6 +42,10 @@ def route_with_rules(query: str) -> RouteDecision:
     extracted: dict[str, Any] = {}
     if not text or text in {"帮我处理一下订单问题", "这个功能为什么不行", "帮我看看"}:
         route, confidence, reason = "clarify", 0.92, "缺少具体对象、现象或期望结果"
+    elif any(term in text for term in ("修复代码", "修改代码", "实现代码")):
+        route, confidence, reason, tools = "codebase", 0.96, "需要在隔离工作区执行编码任务", ["run_coding_task"]
+    elif any(term in text for term in ("搜索代码", "查找代码", "定位函数", "代码仓库")):
+        route, confidence, reason, tools = "codebase", 0.96, "需要检索本地代码仓库", ["search_code"]
     elif any(term in text for term in ("检查首页", "页面是否", "网页", "浏览器")):
         route, confidence, reason, tools = "browser", 0.96, "需要实际访问本地页面", ["browser_check"]
     elif "pytest" in lowered or (("运行" in text or "执行" in text) and "测试" in text):
@@ -116,6 +120,12 @@ def plan_with_rules(query: str, decision: RouteDecision) -> ExecutionPlan:
             parameters = {"test_path": "tests/scenarios/test_login.py" if "登录" in query else "tests/scenarios/test_orders.py", "verbose": True}
         elif tool == "browser_check":
             parameters = {"expected_text": "系统运行正常", "selector": "#system-status"}
+        elif tool == "search_code":
+            quoted = re.search(r"[`'\"]([^`'\"]+)[`'\"]", query)
+            symbol = re.search(r"(?:搜索代码|查找代码|定位函数)\s*[:：]?\s*([A-Za-z_][A-Za-z0-9_.]*)", query)
+            parameters = {"query": (quoted.group(1) if quoted else symbol.group(1) if symbol else query)}
+        elif tool == "run_coding_task":
+            parameters = {"issue": query, "workspace_id": "task-placeholder", "max_attempts": 2}
         else:
             parameters = {}
         steps.append(PlanStep(step_id=f"step_{index}", action=tool, objective=f"执行 {tool}",

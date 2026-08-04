@@ -17,6 +17,8 @@ from app.llm.mock_llm import route_with_rules
         ("最近七天失败订单为什么这么多？", "hybrid"),
         ("运行用户登录测试", "test"),
         ("检查首页是否正常", "browser"),
+        ("定位函数 run_agent", "codebase"),
+        ("修复代码中的登录错误", "codebase"),
         ("帮我处理一下订单问题", "clarify"),
     ],
 )

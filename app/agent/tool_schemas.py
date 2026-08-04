@@ -41,6 +41,38 @@ class BrowserArgs(ToolArgs):
     request_id: str | None = Field(default=None, max_length=100)
 
 
+class CodeWorkspaceArgs(ToolArgs):
+    workspace_id: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{2,63}$")
+
+
+class CodeSearchArgs(ToolArgs):
+    query: str = Field(min_length=1, max_length=300)
+    workspace_id: str | None = Field(default=None, pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{2,63}$")
+    relative_path: str = Field(default=".", max_length=300)
+    max_results: int = Field(default=50, ge=1, le=100)
+
+
+class CodeReadArgs(ToolArgs):
+    path: str = Field(min_length=1, max_length=300)
+    workspace_id: str | None = Field(default=None, pattern=r"^[A-Za-z0-9][A-Za-z0-9_-]{2,63}$")
+    start_line: int = Field(default=1, ge=1)
+    end_line: int = Field(default=200, ge=1)
+
+
+class CodePatchArgs(CodeWorkspaceArgs):
+    patch_text: str = Field(min_length=1, max_length=100_000)
+
+
+class CodeChecksArgs(CodeWorkspaceArgs):
+    test_path: str = Field(default="tests/unit", max_length=300)
+    timeout_seconds: int = Field(default=90, ge=1, le=120)
+
+
+class CodingTaskArgs(CodeWorkspaceArgs):
+    issue: str = Field(min_length=1, max_length=4000)
+    max_attempts: int = Field(default=2, ge=1, le=3)
+
+
 class SearchOrdersArgs(ToolArgs):
     order_no: str | None = Field(default=None, pattern=r"^NS\d{8}$")
     user_id: int | None = Field(default=None, ge=1)
@@ -81,6 +113,14 @@ SCHEMAS: dict[str, type[ToolArgs]] = {
     "execute_readonly_sql": ReadonlySqlArgs,
     "run_pytest": PytestArgs,
     "browser_check": BrowserArgs,
+    "create_code_workspace": CodeWorkspaceArgs,
+    "discard_code_workspace": CodeWorkspaceArgs,
+    "search_code": CodeSearchArgs,
+    "read_code_file": CodeReadArgs,
+    "apply_code_patch": CodePatchArgs,
+    "get_code_diff": CodeWorkspaceArgs,
+    "run_code_checks": CodeChecksArgs,
+    "run_coding_task": CodingTaskArgs,
     "search_orders": SearchOrdersArgs,
     "get_order": GetOrderArgs,
     "get_order_statistics": OrderStatisticsArgs,

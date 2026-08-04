@@ -14,6 +14,7 @@ data/vector_store/
 data/uploads/
 data/screenshots/
 data/traces/
+data/coding_workspaces/
 data/*.db
 data/*.sqlite
 playwright-report/

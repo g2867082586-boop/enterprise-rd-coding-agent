@@ -18,6 +18,9 @@ ALLOWED_ACTIONS = {
     "search_knowledge_base", "describe_table", "execute_readonly_sql",
     "natural_language_query", "search_orders", "get_order", "get_order_statistics",
     "prepare_order_action", "run_pytest", "browser_check",
+    "search_code", "read_code_file", "create_code_workspace", "apply_code_patch",
+    "get_code_diff", "run_code_checks", "discard_code_workspace",
+    "run_coding_task",
 }
 logger = logging.getLogger("enterprise.agent")
 RESPONSE_FORMAT_INSTRUCTIONS = (
@@ -86,12 +89,13 @@ def _router_prompt() -> str:
     return f"""你是企业 Agent 的安全路由器。仅输出 RouteDecision JSON。
 接口/字段/错误码/制度用 knowledge_base；具体记录、数量、时间和统计用 database；
 创建订单、修改订单状态、取消订单、添加订单备注用 order_mutation；
-通用知识用 direct_answer；测试执行用 test；页面实检用 browser；数据加文档解释用 hybrid；
+通用知识用 direct_answer；测试执行用 test；页面实检用 browser；代码搜索/理解/修复用 codebase；数据加文档解释用 hybrid；
 信息不足用 clarify。不要因为出现“订单”就默认检索。
 高优先级边界：询问 ORDER002 等错误码的含义、原因或处理规范必须用 knowledge_base；询问某时间范围失败订单“为什么多/分析原因”必须用 hybrid，因为同时需要数据记录和错误码文档。
 required_tools 只能使用这些精确名称：knowledge_base=search_knowledge_base；
 database 优先使用 search_orders/get_order/get_order_statistics，兼容最近七天失败统计可用 natural_language_query；
 order_mutation=prepare_order_action；test=run_pytest；browser=browser_check；
+codebase 中代码搜索/定位用 search_code，明确要求修复、修改或实现代码时用 run_coding_task；
 direct_answer/clarify 为空列表；hybrid 按需组合。
 rewritten_query 必须是对用户问题的自然语言改写，不得生成 SQL、命令或工具调用。
 当前知识目录：{catalog}"""
@@ -195,7 +199,8 @@ async def evidence_check(state: AgentState) -> dict[str, Any]:
 def _planner_prompt() -> str:
     return """Create an ExecutionPlan JSON for one agent. Use only schema-allowed actions and at most 6 steps.
 Dependencies may reference earlier steps only. Database operations must be read-only. Never plan writes,
-file deletion, external data transfer, or code modification. For recent failed-order questions, use
+file deletion or external data transfer. Code modification is allowed only through run_coding_task,
+which creates an isolated detached Git worktree; never modify the main checkout directly. For recent failed-order questions, use
 natural_language_query with only the original question; never guess columns or SQL. Hybrid order-cause
 analysis must include natural_language_query and search_knowledge_base with the original query and top_k."""
 
@@ -237,6 +242,11 @@ async def execute_step(state: AgentState) -> dict[str, Any]:
     if action == "search_knowledge_base":
         arguments.update({"allowed_scopes": ["public", "authenticated"] + (["admin"] if state.get("user_role") == "admin" else []),
                           "corpus_type": get_settings().knowledge_corpus})
+    if action == "run_coding_task":
+        arguments.update({
+            "issue": state["user_query"],
+            "workspace_id": f"task-{state['request_id'].replace('-', '')[:20]}",
+        })
     if action == "prepare_order_action":
         if state.get("user_role") not in {"order_operator", "admin"}:
             message = "当前账号没有订单写入权限"
@@ -309,6 +319,21 @@ def _mock_answer(state: AgentState) -> str:
         if "登录" in query and "接口" in query:
             return "登录接口需要 `username` 和 `password`；可选参数包含 `device_id`。登录失败时应依次检查参数校验、账号状态、密码哈希迁移、限流和认证服务时钟。\n\n该结论来自下方企业知识库引用。"
         return f"知识库找到 {len(state.get('retrieved_documents', []))} 个有效证据片段，请结合下方引用核验。"
+    if route == "codebase":
+        coding = next((item.get("result") for item in state.get("tool_results", [])
+                       if item.get("tool") == "run_coding_task" and item.get("success")), None)
+        if coding:
+            return (
+                f"Coding Agent 任务状态：{coding.get('status')}，隔离工作区："
+                f"`{coding.get('workspace_id')}`。请审查 Git diff 后决定接受或清理工作区。"
+            )
+        matches = next((item.get("result") for item in state.get("tool_results", [])
+                        if item.get("tool") == "search_code" and item.get("success")), [])
+        if not matches:
+            return "代码仓库中没有找到匹配内容。请提供更精确的函数名、类名或关键词。"
+        lines = [f"在代码仓库中找到 {len(matches)} 处匹配："]
+        lines.extend(f"- `{row['path']}:{row['line']}`：{row['text']}" for row in matches[:10])
+        return "\n".join(lines)
     if route in {"database", "hybrid"}:
         db_result = next((item.get("result") for item in state.get("tool_results", [])
                           if item.get("tool") in {"natural_language_query", "search_orders", "get_order", "get_order_statistics"}

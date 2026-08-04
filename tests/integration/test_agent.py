@@ -23,3 +23,12 @@ async def test_langgraph_agent_uses_mcp_checkpoint_and_trace(seeded_database) ->
     snapshot = await graph.aget_state({"configurable": {"thread_id": session}})
     assert snapshot.values["request_id"] == state["request_id"]
     assert snapshot.values["status"] == "completed"
+
+
+@pytest.mark.asyncio
+async def test_agent_routes_code_search_through_mcp(seeded_database) -> None:
+    state = await run_agent("定位函数 run_agent", f"code-{uuid.uuid4()}")
+    assert state["status"] == "completed"
+    assert state["route"] == "codebase"
+    assert [item["tool"] for item in state["tool_results"]] == ["search_code"]
+    assert "app/agent/graph.py" in state["final_answer"]

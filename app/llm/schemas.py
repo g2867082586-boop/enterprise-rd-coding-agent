@@ -5,17 +5,21 @@ from pydantic import BaseModel, Field, model_validator
 
 RouteType = Literal[
     "direct_answer", "knowledge_base", "database", "order_mutation",
-    "test", "browser", "hybrid", "clarify"
+    "test", "browser", "hybrid", "codebase", "clarify"
 ]
 ActionType = Literal[
     "search_knowledge_base", "describe_table", "execute_readonly_sql", "natural_language_query",
     "search_orders", "get_order", "get_order_statistics", "prepare_order_action",
-    "run_pytest", "browser_check", "ask_clarification", "generate_answer",
+    "run_pytest", "browser_check", "search_code", "read_code_file",
+    "create_code_workspace", "apply_code_patch", "get_code_diff", "run_code_checks",
+    "discard_code_workspace", "run_coding_task", "ask_clarification", "generate_answer",
 ]
 ToolType = Literal[
     "search_knowledge_base", "describe_table", "execute_readonly_sql",
     "natural_language_query", "search_orders", "get_order", "get_order_statistics",
-    "prepare_order_action", "run_pytest", "browser_check",
+    "prepare_order_action", "run_pytest", "browser_check", "search_code", "read_code_file",
+    "create_code_workspace", "apply_code_patch", "get_code_diff", "run_code_checks",
+    "discard_code_workspace", "run_coding_task",
 ]
 
 
