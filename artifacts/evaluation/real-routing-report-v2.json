@@ -1,0 +1,115 @@
+{
+  "generated_at": "2026-07-19T11:21:40.673790+00:00",
+  "provider": "openai_compatible",
+  "total": 10,
+  "routing_accuracy": 1.0,
+  "tool_accuracy": 1.0,
+  "forbidden_tool_rate": 0.0,
+  "samples": [
+    {
+      "query": "你好",
+      "expected_route": "direct_answer",
+      "actual_route": "direct_answer",
+      "route_ok": true,
+      "actual_tools": [],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "Python 装饰器是什么？",
+      "expected_route": "direct_answer",
+      "actual_route": "direct_answer",
+      "route_ok": true,
+      "actual_tools": [],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "登录接口需要哪些参数？",
+      "expected_route": "knowledge_base",
+      "actual_route": "knowledge_base",
+      "route_ok": true,
+      "actual_tools": [
+        "search_knowledge_base"
+      ],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "ORDER002 是什么意思？",
+      "expected_route": "knowledge_base",
+      "actual_route": "knowledge_base",
+      "route_ok": true,
+      "actual_tools": [
+        "search_knowledge_base"
+      ],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "最近七天失败订单有哪些？",
+      "expected_route": "database",
+      "actual_route": "database",
+      "route_ok": true,
+      "actual_tools": [
+        "natural_language_query"
+      ],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "过去一周哪些订单没有处理成功？",
+      "expected_route": "database",
+      "actual_route": "database",
+      "route_ok": true,
+      "actual_tools": [
+        "natural_language_query"
+      ],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "最近七天失败订单为什么这么多？",
+      "expected_route": "hybrid",
+      "actual_route": "hybrid",
+      "route_ok": true,
+      "actual_tools": [
+        "natural_language_query",
+        "search_knowledge_base"
+      ],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "运行用户登录测试",
+      "expected_route": "test",
+      "actual_route": "test",
+      "route_ok": true,
+      "actual_tools": [
+        "run_pytest"
+      ],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "检查首页是否正常",
+      "expected_route": "browser",
+      "actual_route": "browser",
+      "route_ok": true,
+      "actual_tools": [
+        "browser_check"
+      ],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    },
+    {
+      "query": "帮我处理一下订单问题",
+      "expected_route": "clarify",
+      "actual_route": "clarify",
+      "route_ok": true,
+      "actual_tools": [],
+      "tools_ok": true,
+      "forbidden_tool_called": false
+    }
+  ]
+}

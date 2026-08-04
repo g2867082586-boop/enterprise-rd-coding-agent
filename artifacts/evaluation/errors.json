@@ -1,0 +1,32 @@
+[
+  {
+    "query": "逻辑回归如何使用 Sigmoid 函数完成二分类？",
+    "kind": "retrieval_miss",
+    "relevant_document_titles": [
+      "第5章 逻辑回归"
+    ],
+    "found_document_titles": [],
+    "retrieved_titles": [
+      "第7章 神经网络-辅助资料",
+      "第7章 神经网络-辅助资料",
+      "第7章 神经网络-辅助资料",
+      "第7章 神经网络-辅助资料",
+      "第7章 神经网络-辅助资料"
+    ],
+    "recall_at_k": 0.0,
+    "first_relevant_rank": null,
+    "corpus_type": "enterprise"
+  },
+  {
+    "kind": "retrieval_false_positive",
+    "corpus_type": "enterprise",
+    "query": "ORDER002 是什么意思？",
+    "titles": [
+      "第8章 SVM支持向量机",
+      "第7章 神经网络",
+      "第7章 神经网络-辅助资料",
+      "第7章 神经网络-辅助资料",
+      "第7章 神经网络-辅助资料"
+    ]
+  }
+]

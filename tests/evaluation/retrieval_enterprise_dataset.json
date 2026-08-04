@@ -1,0 +1,42 @@
+[
+  {
+    "query": "PCA 如何通过协方差矩阵和特征值实现降维？",
+    "relevant_document_titles": ["第2章：PCA主成分分析"]
+  },
+  {
+    "query": "支持向量机中的最大间隔和核函数有什么作用？",
+    "relevant_document_titles": ["第8章 SVM支持向量机"]
+  },
+  {
+    "query": "逻辑回归如何使用 Sigmoid 函数完成二分类？",
+    "relevant_document_titles": ["第5章 逻辑回归"]
+  },
+  {
+    "query": "K-means 聚类算法如何更新聚类中心？",
+    "relevant_document_titles": ["第6章 聚类"]
+  },
+  {
+    "query": "线性回归的最小二乘法如何估计模型参数？",
+    "relevant_document_titles": ["第4章 线性回归模型"]
+  },
+  {
+    "query": "线性判别分析 LDA 如何寻找最佳投影方向？",
+    "relevant_document_titles": ["第3章 线性判别分析"]
+  },
+  {
+    "query": "神经网络的反向传播算法如何计算梯度？",
+    "relevant_document_titles": ["第7章 神经网络"]
+  },
+  {
+    "query": "监督学习和无监督学习有什么区别？",
+    "relevant_document_titles": ["第1章 机器学习简介", "第6章 聚类"]
+  },
+  {
+    "query": "ORDER002 是什么意思？",
+    "expected_no_evidence": true
+  },
+  {
+    "query": "登录接口需要哪些请求参数？",
+    "expected_no_evidence": true
+  }
+]

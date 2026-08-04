@@ -1,0 +1,2 @@
+星云商城 Web 可用性标准：访问本地首页后 HTTP 状态应为 200，标题应为“星云商城研发助手”，页面必须包含“系统运行正常”和元素 #system-status。浏览器使用 Playwright，通过 channel=chrome 启动 Windows 本机 Google Chrome，默认无头。仅允许 localhost 与 127.0.0.1，截图写入 data/screenshots，完成后关闭 Page、Context 和 Browser。
+

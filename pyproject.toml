@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools==82.0.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enterprise-rd-agent"
+version = "0.1.0"
+description = "Enterprise knowledge and R&D workflow automation agent"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "fastapi==0.139.2",
+  "uvicorn==0.51.0",
+  "pydantic==2.13.4",
+  "pydantic-settings==2.14.2",
+  "sqlalchemy==2.0.51",
+  "pymysql==1.2.0",
+  "sqlglot==30.12.0",
+  "langgraph==1.2.9",
+  "langgraph-checkpoint-sqlite==3.1.0",
+  "mcp==1.28.1",
+  "playwright==1.61.0",
+  "scikit-learn==1.9.0",
+  "httpx==0.28.1",
+  "pytest==9.1.1",
+  "pytest-asyncio==1.4.0",
+  "alembic==1.18.5",
+  "argon2-cffi==25.1.0",
+  "fastembed==0.8.0",
+  "pypdf==6.14.2",
+  "python-docx==1.2.0",
+  "python-multipart==0.0.22",
+  "opentelemetry-sdk==1.44.0",
+  "opentelemetry-exporter-otlp==1.44.0",
+  "redis==8.0.1",
+  "rq==2.10.0",
+  "pymupdf==1.28.0",
+  "pytesseract==0.3.13",
+]
+
+[project.optional-dependencies]
+dev = ["ruff==0.15.7"]
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+addopts = "-m 'not demo_failure and not mysql and not browser and not real_llm'"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = ["demo_failure: opt-in controlled failure analysis scenario", "browser: requires local Google Chrome", "mysql: requires isolated project MySQL", "real_llm: opt-in test that consumes the configured real LLM API"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

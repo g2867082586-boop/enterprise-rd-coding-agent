@@ -1,0 +1,4 @@
+[
+  {"query":"ORDER002 是什么意思？","expected_title_contains":"错误码","expected_entity":"ORDER002"},
+  {"query":"登录请求应该传哪些信息？","expected_title_contains":"用户服务","expected_entity":""}
+]

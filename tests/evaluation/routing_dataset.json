@@ -1,0 +1,12 @@
+[
+  {"query":"你好","expected_route":"direct_answer","expected_tools":[],"forbidden_tools":["search_knowledge_base"]},
+  {"query":"Python 装饰器是什么？","expected_route":"direct_answer","expected_tools":[],"forbidden_tools":["search_knowledge_base"]},
+  {"query":"登录接口需要哪些参数？","expected_route":"knowledge_base","expected_tools":["search_knowledge_base"],"forbidden_tools":["natural_language_query"]},
+  {"query":"ORDER002 是什么意思？","expected_route":"knowledge_base","expected_tools":["search_knowledge_base"],"forbidden_tools":["natural_language_query"]},
+  {"query":"最近七天失败订单有哪些？","expected_route":"database","expected_tools":["natural_language_query"],"forbidden_tools":["search_knowledge_base"]},
+  {"query":"过去一周哪些订单没有处理成功？","expected_route":"database","expected_tools":["natural_language_query"],"forbidden_tools":["search_knowledge_base"]},
+  {"query":"最近七天失败订单为什么这么多？","expected_route":"hybrid","expected_tools":["natural_language_query","search_knowledge_base"],"forbidden_tools":[]},
+  {"query":"运行用户登录测试","expected_route":"test","expected_tools":["run_pytest"],"forbidden_tools":[]},
+  {"query":"检查首页是否正常","expected_route":"browser","expected_tools":["browser_check"],"forbidden_tools":[]},
+  {"query":"帮我处理一下订单问题","expected_route":"clarify","expected_tools":[],"forbidden_tools":["search_knowledge_base","natural_language_query"]}
+]

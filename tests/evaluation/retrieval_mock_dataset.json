@@ -1,0 +1,10 @@
+[
+  {
+    "query": "ORDER002 是什么意思？",
+    "relevant_document_titles": ["error-codes"]
+  },
+  {
+    "query": "登录请求应该传哪些信息？",
+    "relevant_document_titles": ["星云商城用户服务接口"]
+  }
+]

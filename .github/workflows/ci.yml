@@ -1,0 +1,53 @@
+name: test
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  mysql-and-app:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.CI_MYSQL_ROOT_PASSWORD }}
+          MYSQL_DATABASE: nebula_shop_test
+        ports: ["3308:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -p$MYSQL_ROOT_PASSWORD"
+          --health-interval=5s --health-timeout=5s --health-retries=30
+    env:
+      DATABASE_PROVIDER: mysql
+      MYSQL_HOST: 127.0.0.1
+      MYSQL_PORT: 3308
+      MYSQL_DATABASE: nebula_shop_test
+      MYSQL_ADMIN_USER: root
+      MYSQL_ADMIN_PASSWORD: ${{ secrets.CI_MYSQL_ROOT_PASSWORD }}
+      MYSQL_READONLY_USER: nebula_reader_ci
+      MYSQL_READONLY_PASSWORD: ${{ secrets.CI_MYSQL_READONLY_PASSWORD }}
+      MYSQL_APP_USER: nebula_app_ci
+      MYSQL_APP_PASSWORD: ${{ secrets.CI_MYSQL_APP_PASSWORD }}
+      LLM_PROVIDER: mock
+      EMBEDDING_PROVIDER: tfidf_fallback
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip}
+      - run: pip install -e .
+      - run: python scripts/init_database.py
+      - run: python scripts/provision_web_database.py
+      - run: pytest -q -m mysql -o "addopts="
+      - run: pytest -q -m "not browser"
+      - uses: actions/setup-node@v4
+        with: {node-version: "22", cache: npm, cache-dependency-path: frontend/package-lock.json}
+      - run: npm ci
+        working-directory: frontend
+      - run: npm test -- --run
+        working-directory: frontend
+      - name: Verify Google Chrome
+        run: google-chrome --version
+      - name: Google Chrome E2E
+        run: pytest tests/browser -q -m browser -o "addopts="
+        env:
+          BROWSER_CHANNEL: chrome
+          BROWSER_HEADLESS: "true"

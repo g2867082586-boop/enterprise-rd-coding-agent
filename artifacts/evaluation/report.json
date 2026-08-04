@@ -1,0 +1,296 @@
+{
+  "generated_at": "2026-07-27T08:11:34.290009+00:00",
+  "mode": "deterministic_mock_and_configured_retrieval",
+  "routing": {
+    "total": 10,
+    "accuracy": 1.0,
+    "per_category": {
+      "direct_answer": 1.0,
+      "knowledge_base": 1.0,
+      "database": 1.0,
+      "hybrid": 1.0,
+      "test": 1.0,
+      "browser": 1.0,
+      "clarify": 1.0
+    },
+    "confusion_matrix": {
+      "direct_answer->direct_answer": 2,
+      "knowledge_base->knowledge_base": 2,
+      "database->database": 2,
+      "hybrid->hybrid": 1,
+      "test->test": 1,
+      "browser->browser": 1,
+      "clarify->clarify": 1
+    },
+    "tool_accuracy": 1.0,
+    "forbidden_tool_rate": 0.0
+  },
+  "retrieval": {
+    "mock": {
+      "dataset": "retrieval_mock_dataset.json",
+      "corpus_type": "mock",
+      "top_k": 5,
+      "positive_queries": 2,
+      "no_evidence_queries": 0,
+      "hit_rate_at_k": 1.0,
+      "document_recall_at_k": 1.0,
+      "mrr": 0.6666666666666666,
+      "chunk_precision_at_k": 0.5,
+      "no_evidence_accuracy": null,
+      "zero_score_results": 0,
+      "samples": [
+        {
+          "query": "ORDER002 是什么意思？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "error-codes"
+          ],
+          "found_document_titles": [
+            "error-codes"
+          ],
+          "retrieved_titles": [
+            "订单失败排查手册",
+            "星云商城订单查询接口",
+            "error-codes",
+            "error-codes",
+            "星云商城 MySQL 数据字典"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 3
+        },
+        {
+          "query": "登录请求应该传哪些信息？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "星云商城用户服务接口"
+          ],
+          "found_document_titles": [
+            "星云商城用户服务接口"
+          ],
+          "retrieved_titles": [
+            "星云商城用户服务接口"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 1
+        }
+      ]
+    },
+    "enterprise": {
+      "dataset": "retrieval_enterprise_dataset.json",
+      "corpus_type": "enterprise",
+      "top_k": 5,
+      "positive_queries": 8,
+      "no_evidence_queries": 2,
+      "hit_rate_at_k": 0.875,
+      "document_recall_at_k": 0.875,
+      "mrr": 0.875,
+      "chunk_precision_at_k": 0.825,
+      "no_evidence_accuracy": 0.5,
+      "zero_score_results": 0,
+      "samples": [
+        {
+          "query": "PCA 如何通过协方差矩阵和特征值实现降维？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "第2章：PCA主成分分析"
+          ],
+          "found_document_titles": [
+            "第2章：PCA主成分分析"
+          ],
+          "retrieved_titles": [
+            "第2章：PCA主成分分析",
+            "第2章：PCA主成分分析",
+            "第2章：PCA主成分分析",
+            "第2章：PCA主成分分析",
+            "第2章：PCA主成分分析"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 1
+        },
+        {
+          "query": "支持向量机中的最大间隔和核函数有什么作用？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "第8章 SVM支持向量机"
+          ],
+          "found_document_titles": [
+            "第8章 SVM支持向量机"
+          ],
+          "retrieved_titles": [
+            "第8章 SVM支持向量机",
+            "第8章 SVM支持向量机",
+            "第8章 SVM支持向量机",
+            "第8章 SVM支持向量机",
+            "第3章 线性判别分析"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 1
+        },
+        {
+          "query": "逻辑回归如何使用 Sigmoid 函数完成二分类？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "第5章 逻辑回归"
+          ],
+          "found_document_titles": [],
+          "retrieved_titles": [
+            "第7章 神经网络-辅助资料",
+            "第7章 神经网络-辅助资料",
+            "第7章 神经网络-辅助资料",
+            "第7章 神经网络-辅助资料",
+            "第7章 神经网络-辅助资料"
+          ],
+          "recall_at_k": 0.0,
+          "first_relevant_rank": null
+        },
+        {
+          "query": "K-means 聚类算法如何更新聚类中心？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "第6章 聚类"
+          ],
+          "found_document_titles": [
+            "第6章 聚类"
+          ],
+          "retrieved_titles": [
+            "第6章 聚类",
+            "第6章 聚类",
+            "第6章 聚类",
+            "第6章 聚类",
+            "第6章 聚类"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 1
+        },
+        {
+          "query": "线性回归的最小二乘法如何估计模型参数？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "第4章 线性回归模型"
+          ],
+          "found_document_titles": [
+            "第4章 线性回归模型"
+          ],
+          "retrieved_titles": [
+            "第4章 线性回归模型",
+            "第4章 线性回归模型",
+            "第4章 线性回归模型",
+            "第4章 线性回归模型",
+            "第4章 线性回归模型"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 1
+        },
+        {
+          "query": "线性判别分析 LDA 如何寻找最佳投影方向？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "第3章 线性判别分析"
+          ],
+          "found_document_titles": [
+            "第3章 线性判别分析"
+          ],
+          "retrieved_titles": [
+            "第3章 线性判别分析",
+            "第3章 线性判别分析",
+            "第1章 机器学习简介",
+            "第3章 线性判别分析",
+            "第3章 线性判别分析"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 1
+        },
+        {
+          "query": "神经网络的反向传播算法如何计算梯度？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "第7章 神经网络"
+          ],
+          "found_document_titles": [
+            "第7章 神经网络"
+          ],
+          "retrieved_titles": [
+            "第7章 神经网络",
+            "第7章 神经网络",
+            "第7章 神经网络",
+            "第7章 神经网络",
+            "第7章 神经网络"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 1
+        },
+        {
+          "query": "监督学习和无监督学习有什么区别？",
+          "kind": "positive",
+          "relevant_document_titles": [
+            "第1章 机器学习简介",
+            "第6章 聚类"
+          ],
+          "found_document_titles": [
+            "第1章 机器学习简介",
+            "第6章 聚类"
+          ],
+          "retrieved_titles": [
+            "第1章 机器学习简介",
+            "第6章 聚类",
+            "第1章 机器学习简介",
+            "第6章 聚类",
+            "第1章 机器学习简介"
+          ],
+          "recall_at_k": 1.0,
+          "first_relevant_rank": 1
+        },
+        {
+          "query": "ORDER002 是什么意思？",
+          "kind": "no_evidence",
+          "passed": false,
+          "retrieved_titles": [
+            "第8章 SVM支持向量机",
+            "第7章 神经网络",
+            "第7章 神经网络-辅助资料",
+            "第7章 神经网络-辅助资料",
+            "第7章 神经网络-辅助资料"
+          ]
+        },
+        {
+          "query": "登录接口需要哪些请求参数？",
+          "kind": "no_evidence",
+          "passed": true,
+          "retrieved_titles": []
+        }
+      ]
+    }
+  },
+  "errors": [
+    {
+      "query": "逻辑回归如何使用 Sigmoid 函数完成二分类？",
+      "kind": "retrieval_miss",
+      "relevant_document_titles": [
+        "第5章 逻辑回归"
+      ],
+      "found_document_titles": [],
+      "retrieved_titles": [
+        "第7章 神经网络-辅助资料",
+        "第7章 神经网络-辅助资料",
+        "第7章 神经网络-辅助资料",
+        "第7章 神经网络-辅助资料",
+        "第7章 神经网络-辅助资料"
+      ],
+      "recall_at_k": 0.0,
+      "first_relevant_rank": null,
+      "corpus_type": "enterprise"
+    },
+    {
+      "kind": "retrieval_false_positive",
+      "corpus_type": "enterprise",
+      "query": "ORDER002 是什么意思？",
+      "titles": [
+        "第8章 SVM支持向量机",
+        "第7章 神经网络",
+        "第7章 神经网络-辅助资料",
+        "第7章 神经网络-辅助资料",
+        "第7章 神经网络-辅助资料"
+      ]
+    }
+  ]
+}

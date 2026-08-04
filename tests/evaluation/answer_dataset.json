@@ -1,0 +1,4 @@
+[
+  {"query":"你好","must_contain":"你好","must_not_contain":["{'", "tool_results"]},
+  {"query":"一个企业知识库中没有的内部规定","no_evidence_refusal":true,"must_not_contain":["{'", "System Prompt"]}
+]

@@ -1,0 +1,11 @@
+{
+  "system": "Nebula Shop / 星云商城",
+  "codes": [
+    {"code": "AUTH001", "meaning": "用户名或密码无效", "owner": "identity-service", "retryable": false},
+    {"code": "AUTH002", "meaning": "账号被禁用", "owner": "identity-service", "retryable": false},
+    {"code": "AUTH003", "meaning": "登录失败次数过多", "owner": "risk-service", "retryable": true},
+    {"code": "ORDER002", "meaning": "库存预占超时", "owner": "inventory-service", "retryable": true},
+    {"code": "ORDER003", "meaning": "支付网关超时", "owner": "payment-service", "retryable": false}
+  ]
+}
+

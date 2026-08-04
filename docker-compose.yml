@@ -1,0 +1,119 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: nebula-shop-mysql
+    restart: unless-stopped
+    ports:
+      - "${MYSQL_PORT:-3308}:3306"
+    environment:
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-nebula_shop}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ADMIN_PASSWORD:?set MYSQL_ADMIN_PASSWORD in .env}"
+    volumes:
+      - nebula_mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [backend]
+
+  redis:
+    image: redis:7.4-alpine
+    container_name: nebula-agent-redis
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory-policy", "noeviction"]
+    volumes:
+      - nebula_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [backend]
+
+  bootstrap:
+    build: .
+    container_name: nebula-agent-bootstrap
+    command: ["python", "scripts/bootstrap_production.py"]
+    env_file: .env
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - nebula_app_data:/app/data
+      - nebula_knowledge:/app/knowledge_base/enterprise
+    depends_on:
+      mysql: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    networks: [backend]
+
+  api:
+    build: .
+    container_name: nebula-agent-api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      REDIS_URL: redis://redis:6379/0
+      REDIS_REQUIRED: "true"
+      BROWSER_CHANNEL: chromium
+      FRONTEND_URL: "${PUBLIC_ORIGIN:-http://127.0.0.1:8080}"
+      ALLOWED_ORIGINS: "${PUBLIC_ORIGIN:-http://127.0.0.1:8080}"
+    volumes:
+      - nebula_app_data:/app/data
+      - nebula_knowledge:/app/knowledge_base/enterprise
+    depends_on:
+      bootstrap: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/live')"]
+      interval: 10s
+      timeout: 3s
+      retries: 20
+    networks: [backend]
+
+  worker:
+    build: .
+    container_name: nebula-agent-worker
+    restart: unless-stopped
+    command: ["python", "-m", "app.jobs.worker"]
+    env_file: .env
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      REDIS_URL: redis://redis:6379/0
+      REDIS_REQUIRED: "true"
+      BROWSER_CHANNEL: chromium
+    volumes:
+      - nebula_app_data:/app/data
+      - nebula_knowledge:/app/knowledge_base/enterprise
+    depends_on:
+      bootstrap: {condition: service_completed_successfully}
+      redis: {condition: service_healthy}
+    networks: [backend]
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    container_name: nebula-agent-web
+    restart: unless-stopped
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    depends_on:
+      api: {condition: service_healthy}
+    networks: [backend]
+
+volumes:
+  nebula_mysql_data:
+  nebula_redis_data:
+  nebula_app_data:
+  nebula_knowledge:
+
+networks:
+  backend:
+    driver: bridge

@@ -1,0 +1,194 @@
+{
+  "generated_at": "2026-08-04T08:11:08.919370+00:00",
+  "documents": [
+    {
+      "document_id": "4602079582600d0ce83a",
+      "title": "星云商城订单查询接口",
+      "department": "通用",
+      "document_type": "md",
+      "updated_at": "2026-07-18T10:15:50.088707+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "mock",
+      "core_entities": [
+        "ORDER002",
+        "ORDER003"
+      ]
+    },
+    {
+      "document_id": "aec584d5dfb7dc4cf0bb",
+      "title": "星云商城用户服务接口",
+      "department": "通用",
+      "document_type": "md",
+      "updated_at": "2026-07-18T10:15:50.088707+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "mock",
+      "core_entities": [
+        "AUTH001",
+        "AUTH002",
+        "AUTH003"
+      ]
+    },
+    {
+      "document_id": "89a3c366d63f55c3c77a",
+      "title": "星云商城 MySQL 数据字典",
+      "department": "通用",
+      "document_type": "md",
+      "updated_at": "2026-07-18T10:15:50.089708+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "mock",
+      "core_entities": []
+    },
+    {
+      "document_id": "0f0336f8946929583858",
+      "title": "error-codes",
+      "department": "通用",
+      "document_type": "json",
+      "updated_at": "2026-07-18T10:15:50.095239+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "mock",
+      "core_entities": [
+        "AUTH001",
+        "AUTH002",
+        "AUTH003",
+        "ORDER002"
+      ]
+    },
+    {
+      "document_id": "9b69340d9651e29cbebf",
+      "title": "星云商城 pytest 测试规范",
+      "department": "通用",
+      "document_type": "md",
+      "updated_at": "2026-07-18T10:15:50.092716+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "mock",
+      "core_entities": []
+    },
+    {
+      "document_id": "0f817bc6f025b40b162b",
+      "title": "web-availability",
+      "department": "通用",
+      "document_type": "txt",
+      "updated_at": "2026-07-18T10:15:50.093236+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "mock",
+      "core_entities": []
+    },
+    {
+      "document_id": "cf298842fa741aa9ca11",
+      "title": "登录失败排查手册",
+      "department": "通用",
+      "document_type": "md",
+      "updated_at": "2026-07-18T10:15:50.090710+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "mock",
+      "core_entities": [
+        "AUTH001",
+        "AUTH002",
+        "AUTH003"
+      ]
+    },
+    {
+      "document_id": "ca8a840dafbfa2a44b51",
+      "title": "订单失败排查手册",
+      "department": "通用",
+      "document_type": "md",
+      "updated_at": "2026-07-18T10:15:50.091713+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "mock",
+      "core_entities": [
+        "ORDER002",
+        "ORDER003"
+      ]
+    },
+    {
+      "document_id": "cff8e4665d559a486511",
+      "title": "第1章 机器学习简介",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:12:55.618272+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    },
+    {
+      "document_id": "14fa386e05d493cf9c2a",
+      "title": "第2章：PCA主成分分析",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:13:16.382554+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    },
+    {
+      "document_id": "16cd4a48803afab28c0b",
+      "title": "第3章 线性判别分析",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:13:16.599481+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    },
+    {
+      "document_id": "0eeff56fa0f6e34cc0b8",
+      "title": "第4章 线性回归模型",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:13:27.801234+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    },
+    {
+      "document_id": "4bfb80a0653e9f727fdf",
+      "title": "第5章 逻辑回归",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:13:51.038651+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    },
+    {
+      "document_id": "939575ff5c8458c2899a",
+      "title": "第6章 聚类",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:14:03.494928+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    },
+    {
+      "document_id": "c5b041e80e266fb49f8b",
+      "title": "第7章 神经网络-辅助资料",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:14:17.581845+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    },
+    {
+      "document_id": "bb10df5e2be9682e1c9e",
+      "title": "第7章 神经网络",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:14:17.703907+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    },
+    {
+      "document_id": "99291119cb654cce9197",
+      "title": "第8章 SVM支持向量机",
+      "department": "通用",
+      "document_type": "pdf",
+      "updated_at": "2026-07-02T06:14:27.654258+00:00",
+      "access_scope": "authenticated",
+      "corpus_type": "enterprise",
+      "core_entities": []
+    }
+  ]
+}
