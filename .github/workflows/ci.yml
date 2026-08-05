@@ -38,7 +38,7 @@ jobs:
       - run: python scripts/init_database.py
       - run: python scripts/provision_web_database.py
       - run: python -m pytest -q -m mysql -o "addopts="
-      - run: python -m pytest -q -m "not browser"
+      - run: python -m pytest -q
       - uses: actions/setup-node@v4
         with: {node-version: "22", cache: npm, cache-dependency-path: frontend/package-lock.json}
       - run: npm ci
