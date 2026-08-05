@@ -37,8 +37,8 @@ jobs:
       - run: pip install -e .
       - run: python scripts/init_database.py
       - run: python scripts/provision_web_database.py
-      - run: pytest -q -m mysql -o "addopts="
-      - run: pytest -q -m "not browser"
+      - run: python -m pytest -q -m mysql -o "addopts="
+      - run: python -m pytest -q -m "not browser"
       - uses: actions/setup-node@v4
         with: {node-version: "22", cache: npm, cache-dependency-path: frontend/package-lock.json}
       - run: npm ci
@@ -48,7 +48,7 @@ jobs:
       - name: Verify Google Chrome
         run: google-chrome --version
       - name: Google Chrome E2E
-        run: pytest tests/browser -q -m browser -o "addopts="
+        run: python -m pytest tests/browser -q -m browser -o "addopts="
         env:
           BROWSER_CHANNEL: chrome
           BROWSER_HEADLESS: "true"
