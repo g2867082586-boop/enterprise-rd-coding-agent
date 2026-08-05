@@ -13,7 +13,7 @@
   },
   {
     "id": "workspace-error-test",
-    "issue": "为 Coding Agent 工作区不存在时的错误行为增加一个清晰的单元测试，不要放宽路径或工作区安全限制。",
+    "issue": "在 tests/unit/test_codebase_tools.py 中为 app/tools/codebase_tool.py 的 _workspace 函数增加一个清晰的单元测试：工作区不存在时必须抛出 CodeWorkspaceError。不要放宽路径或工作区安全限制。",
     "expected_paths": ["tests/unit/test_codebase_tools.py"],
     "max_attempts": 2
   }

@@ -30,16 +30,35 @@ def _search_terms(issue: str) -> list[str]:
     return list(dict.fromkeys([*quoted, *identifiers]))[:8]
 
 
-def build_code_context(issue: str, workspace_id: str, max_chars: int = 20_000) -> str:
+def _mentioned_paths(issue: str) -> list[str]:
+    paths = re.findall(
+        r"(?:[A-Za-z0-9_.-]+[/\\])+[A-Za-z0-9_.-]+",
+        issue,
+    )
+    return list(dict.fromkeys(path.replace("\\", "/") for path in paths))[:8]
+
+
+def build_code_context(issue: str, workspace_id: str, max_chars: int = 12_000) -> str:
     """Retrieve bounded source context without embedding secrets or generated files."""
+    chunks: list[str] = []
+    for path in _mentioned_paths(issue):
+        try:
+            content = read_code_file(path, workspace_id, 1, 400)
+        except CodeWorkspaceError:
+            continue
+        chunks.append(f"FILE {path}\n{content['content']}")
+        if sum(len(chunk) for chunk in chunks) >= max_chars:
+            return "\n\n".join(chunks)[:max_chars]
+
     matches: list[dict[str, Any]] = []
     for term in _search_terms(issue):
         matches.extend(search_code(term, workspace_id, max_results=12))
     unique: dict[tuple[str, int], dict[str, Any]] = {
         (row["path"], row["line"]): row for row in matches
     }
-    chunks: list[str] = []
     for row in list(unique.values())[:20]:
+        if any(chunk.startswith(f"FILE {row['path']}\n") for chunk in chunks):
+            continue
         start = max(1, int(row["line"]) - 12)
         end = int(row["line"]) + 20
         content = read_code_file(row["path"], workspace_id, start, end)
@@ -60,7 +79,8 @@ async def _llm_proposal(issue: str, context: str, feedback: str) -> CodePatchPro
 Produce one minimal unified diff with paths relative to the repository root. Do not modify secrets,
 dependencies, generated files, CI credentials, or files outside the repository. Include or update tests.
 The patch will be applied in an isolated Git worktree and validated with pytest. test_path must stay
-inside tests/. Use the failure feedback to produce an incremental patch for the current worktree."""
+inside tests/. Only edit file paths shown in repository_context; never invent modules or paths.
+Use the failure feedback to produce an incremental patch for the current worktree."""
     payload = json.dumps(
         {"issue": issue, "repository_context": context, "previous_feedback": feedback},
         ensure_ascii=False,

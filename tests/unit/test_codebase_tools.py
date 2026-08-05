@@ -46,3 +46,22 @@ new file mode 100644
         assert not (Path.cwd() / "coding_demo.txt").exists()
     finally:
         discard_code_workspace(workspace_id)
+
+
+def test_patch_recounts_model_generated_hunk_lengths() -> None:
+    workspace_id = f"pytest-{uuid4().hex[:12]}"
+    create_code_workspace(workspace_id)
+    try:
+        patch = """diff --git a/coding_recount.txt b/coding_recount.txt
+new file mode 100644
+--- /dev/null
++++ b/coding_recount.txt
+@@ -0,0 +1,99 @@
++first line
++second line
+"""
+        result = apply_code_patch(workspace_id, patch)
+        assert result["applied"] is True
+        assert "second line" in git_diff(workspace_id)["diff"]
+    finally:
+        discard_code_workspace(workspace_id)

@@ -35,7 +35,7 @@ React 工作台
 - 不确定时，先执行下面的检查，不要直接覆盖 `.env`：
 
 ```powershell
-$ProjectRoot = "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+$ProjectRoot = (Get-Location).Path
 Set-Location -LiteralPath $ProjectRoot
 
 [pscustomobject]@{
@@ -72,7 +72,7 @@ Set-Location -LiteralPath $ProjectRoot
 打开 PowerShell：
 
 ```powershell
-$ProjectRoot = "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+$ProjectRoot = (Get-Location).Path
 Set-Location -LiteralPath $ProjectRoot
 
 if (-not (Test-Path -LiteralPath ".\pyproject.toml")) {
@@ -180,7 +180,7 @@ KNOWLEDGE_CORPUS=mock
 先手动打开 Docker Desktop，等待界面显示 Engine 已运行。然后执行：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent"
 docker compose up -d mysql
 docker compose ps
 ```
@@ -261,7 +261,7 @@ failed: 0
 进入前端目录：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent\frontend"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent\frontend"
 
 if (-not (Test-Path -LiteralPath ".\package.json")) {
     throw "当前目录不是 frontend：$((Get-Location).Path)"
@@ -277,7 +277,7 @@ npm install
 新开一个 PowerShell，确认 MySQL 仍为 healthy，然后启动：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent"
 docker compose ps
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
 ```
@@ -299,7 +299,7 @@ Invoke-RestMethod http://127.0.0.1:8000/health
 再开一个 PowerShell：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent\frontend"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent\frontend"
 npm run dev
 ```
 
@@ -336,7 +336,7 @@ Local: http://127.0.0.1:5173/
 第一个 PowerShell：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent"
 docker compose up -d mysql
 docker compose ps
 ```
@@ -383,7 +383,7 @@ Invoke-RestMethod http://127.0.0.1:8000/health
 第三个 PowerShell：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent\frontend"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent\frontend"
 npm run dev
 ```
 
@@ -422,7 +422,7 @@ npm run dev
 执行：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent"
 docker compose ps
 Test-NetConnection -ComputerName 127.0.0.1 -Port 3308
 docker compose logs --tail 100 mysql
@@ -470,7 +470,7 @@ npm run dev
 说明在错误目录运行了 npm。执行：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent\frontend"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent\frontend"
 Test-Path -LiteralPath ".\package.json"
 npm run dev
 ```
@@ -496,7 +496,7 @@ Test-Path -LiteralPath ".\scripts\demo.py"
 停止项目 MySQL 容器：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent"
 docker compose stop mysql
 ```
 
@@ -548,7 +548,7 @@ KNOWLEDGE_CORPUS=enterprise
 后端默认回归：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent"
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
@@ -567,7 +567,7 @@ MySQL 专项：
 前端测试和构建：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent\frontend"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent\frontend"
 npm test -- --run
 npm run build
 ```
@@ -575,7 +575,7 @@ npm run build
 Google Chrome E2E：
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent"
 .\.venv\Scripts\python.exe -m pytest tests\browser\test_web_e2e.py -q
 ```
 

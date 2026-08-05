@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-08-04T09:37:08.193556+00:00",
+  "provider": "openai_compatible",
+  "total": 3,
+  "passed": 2,
+  "task_pass_rate": 0.6666666666666666,
+  "average_attempts": 1.3333333333333333,
+  "samples": [
+    {
+      "id": "guard-docstring",
+      "passed": false,
+      "tests_passed": true,
+      "expected_paths_present": false,
+      "attempt_count": 2,
+      "workspace_id": null,
+      "attempts": [
+        {
+          "attempt": 1,
+          "summary": "Add docstring to UnsafeCommandError and update unit tests.",
+          "patch_applied": false,
+          "checks_passed": false,
+          "feedback": "Patch apply failed:\nerror: patch failed: tests/unit/test_security_guards.py:1\nerror: tests/unit/test_security_guards.py: patch does not apply\n"
+        },
+        {
+          "attempt": 2,
+          "summary": "Add docstring to UnsafeCommandError and update unit tests without changing security behavior.",
+          "patch_applied": true,
+          "checks_passed": true,
+          "test_path": "tests/unit/test_security_guards.py",
+          "duration_ms": 12646
+        }
+      ]
+    },
+    {
+      "id": "codebase-time-import",
+      "passed": true,
+      "tests_passed": true,
+      "expected_paths_present": true,
+      "attempt_count": 1,
+      "workspace_id": null,
+      "attempts": [
+        {
+          "attempt": 1,
+          "summary": "Refactor codebase_tool.py to use standard import time instead of __import__('time') while preserving behavior.",
+          "patch_applied": true,
+          "checks_passed": true,
+          "test_path": "tests/unit",
+          "duration_ms": 87557
+        }
+      ]
+    },
+    {
+      "id": "workspace-error-test",
+      "passed": true,
+      "tests_passed": true,
+      "expected_paths_present": true,
+      "attempt_count": 1,
+      "workspace_id": null,
+      "attempts": [
+        {
+          "attempt": 1,
+          "summary": "Add unit test for _workspace raising CodeWorkspaceError when workspace does not exist.",
+          "patch_applied": true,
+          "checks_passed": true,
+          "test_path": "tests/unit",
+          "duration_ms": 85426
+        }
+      ]
+    }
+  ]
+}

@@ -21,3 +21,4 @@ playwright-report/
 *.log
 *全流程复刻提示词.md
 *补充约束.md
+knowledge_base/enterprise/*.pdf

@@ -158,13 +158,15 @@ def apply_code_patch(workspace_id: str, patch_text: str) -> dict[str, Any]:
         raise CodeWorkspaceError("patches require an isolated workspace_id")
     _validate_patch_paths(patch_text, root)
     check = subprocess.run(
-        ["git", "apply", "--check", "-"], cwd=root, input=patch_text, shell=False,
+        ["git", "apply", "--check", "--recount", "--whitespace=nowarn", "-"],
+        cwd=root, input=patch_text, shell=False,
         capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
     )
     if check.returncode:
         return {"applied": False, "error": check.stderr[-2000:]}
     applied = subprocess.run(
-        ["git", "apply", "--whitespace=nowarn", "-"], cwd=root, input=patch_text, shell=False,
+        ["git", "apply", "--recount", "--whitespace=nowarn", "-"],
+        cwd=root, input=patch_text, shell=False,
         capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=30,
     )
     return {"applied": applied.returncode == 0, "error": applied.stderr[-2000:] or None,

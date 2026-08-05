@@ -9,7 +9,7 @@
 ## 2. 确认本地敏感文件不会提交
 
 ```powershell
-Set-Location -LiteralPath "D:\AI Agent+MCP从0到1\enterprise-rd-agent"
+Set-Location -LiteralPath "<path-to-your-clone>\enterprise-rd-agent"
 Select-String -Path .gitignore -Pattern '^\.env$'
 ```
 

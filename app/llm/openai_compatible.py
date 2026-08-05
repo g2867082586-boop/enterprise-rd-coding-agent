@@ -69,6 +69,13 @@ class OpenAICompatibleLLM:
                              {"role": "user", "content": user_prompt}],
                 "response_format": {"type": "json_object"},
             }
+            # DeepSeek V4 enables thinking by default. A bounded JSON request can
+            # otherwise spend the whole output budget on reasoning and return an
+            # empty ``content`` field, which cannot be validated. Keep this
+            # provider-specific so other OpenAI-compatible APIs do not receive an
+            # unsupported extension parameter.
+            if "api.deepseek.com" in self._base_url.lower():
+                payload["thinking"] = {"type": "disabled"}
             data = await self._post(payload)
             try:
                 content = data["choices"][0]["message"]["content"]

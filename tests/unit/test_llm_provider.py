@@ -18,3 +18,17 @@ async def test_openai_compatible_structured_output_uses_json_object_and_validate
     assert result.route == "database"
     assert captured["response_format"] == {"type": "json_object"}
     assert "JSON Schema" in captured["messages"][0]["content"]
+
+
+@pytest.mark.asyncio
+async def test_deepseek_structured_output_disables_default_thinking(monkeypatch) -> None:
+    provider = OpenAICompatibleLLM("sk-test-not-real", "https://api.deepseek.com", "test-model")
+    captured = {}
+
+    async def fake_post(payload):
+        captured.update(payload)
+        return {"choices": [{"message": {"content": '{"route":"database","confidence":0.9,"reason":"records","rewritten_query":"q","required_tools":["natural_language_query"],"extracted_parameters":{},"needs_planning":false}'}}]}
+
+    monkeypatch.setattr(provider, "_post", fake_post)
+    await provider.generate_structured("return json", "q", RouteDecision)
+    assert captured["thinking"] == {"type": "disabled"}

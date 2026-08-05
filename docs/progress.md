@@ -85,7 +85,7 @@
 
 ### 实际验证
 
-- 执行命令：从 `C:\Users\52383` 设置 `$ProjectRoot` 并执行 `Set-Location -LiteralPath $ProjectRoot`，随后运行 `.\.venv\Scripts\python.exe -m pytest tests\unit -q`。
+- 执行命令：从本地用户目录设置 `$ProjectRoot` 并执行 `Set-Location -LiteralPath $ProjectRoot`，随后运行 `.\.venv\Scripts\python.exe -m pytest tests\unit -q`。
 - 返回结果：cwd 正确解析到项目根目录；`scripts\demo.py` 存在；Python 正确解析到项目 `.venv`；13 passed in 2.30s，退出码 0。
 - 是否通过：已实际验证。
 
@@ -206,7 +206,7 @@
 
 ### 已完成
 
-- 根据用户截图确认命令从 `C:\Users\52383` 执行，误用了该目录下另一套 `.venv`。
+- 根据用户截图确认命令从本地用户目录执行，误用了该目录下另一套 `.venv`。
 - README 和演示指南现要求每个新 PowerShell 先 `Set-Location` 到项目根目录，并加入文件存在性校验；Python 路径统一写为 `.\.venv\Scripts\python.exe`。
 
 ### 实际验证
