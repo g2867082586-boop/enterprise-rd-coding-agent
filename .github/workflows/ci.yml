@@ -10,7 +10,8 @@ jobs:
       mysql:
         image: mysql:8.4
         env:
-          MYSQL_ROOT_PASSWORD: ${{ secrets.CI_MYSQL_ROOT_PASSWORD }}
+          # Ephemeral service-container credential; never used outside this CI job.
+          MYSQL_ROOT_PASSWORD: ci-root-password
           MYSQL_DATABASE: nebula_shop_test
         ports: ["3308:3306"]
         options: >-
@@ -22,11 +23,11 @@ jobs:
       MYSQL_PORT: 3308
       MYSQL_DATABASE: nebula_shop_test
       MYSQL_ADMIN_USER: root
-      MYSQL_ADMIN_PASSWORD: ${{ secrets.CI_MYSQL_ROOT_PASSWORD }}
+      MYSQL_ADMIN_PASSWORD: ci-root-password
       MYSQL_READONLY_USER: nebula_reader_ci
-      MYSQL_READONLY_PASSWORD: ${{ secrets.CI_MYSQL_READONLY_PASSWORD }}
+      MYSQL_READONLY_PASSWORD: ci-readonly-password
       MYSQL_APP_USER: nebula_app_ci
-      MYSQL_APP_PASSWORD: ${{ secrets.CI_MYSQL_APP_PASSWORD }}
+      MYSQL_APP_PASSWORD: ci-app-password
       LLM_PROVIDER: mock
       EMBEDDING_PROVIDER: tfidf_fallback
     steps:
